@@ -51,7 +51,7 @@ const Form = () => {
     const { palette } = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isNonMobile = useMediaQuery("(min-width: 1000px");
+    const isNonMobile = useMediaQuery("(min-width: 1000px)");
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 

@@ -72,7 +72,7 @@ const HomePage = () => {
                         </Button>
             <Button
                         fullWidth
-                        onClick={() => navigate("/home")}
+                        onClick={() => navigate("/makeaproject")}
                         sx = {{
                             m:"2rem 0",
                             p:"1rem",

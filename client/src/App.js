@@ -8,6 +8,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material";
 import { themeSettings } from "theme";
 import Examples from "./scenes/examplePage";
+import MakerPage from "./scenes/makerPage";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element = {<LoginPage/>}/>
             <Route path="/home" element = { isAuth? <HomePage /> : <Navigate to="/"/>}/>
             <Route path="/examples" element = { isAuth? <Examples /> : <Navigate to="/"/>}/>
+            <Route path="/makeaproject" element = { isAuth? <MakerPage /> : <Navigate to="/"/>}/>
             <Route path="/profile/:userId" element = {isAuth ? <ProfilePage/> : <Navigate to="/"/>}/>
           </Routes>
         </ThemeProvider>
