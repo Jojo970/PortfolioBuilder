@@ -55,12 +55,19 @@ const OneProject = () => {
   const { _id } = useSelector((state) => state.user);
 
   const handleFormSubmit = async (values, onSubmitProps) => {
+    const formData = new FormData();
+    formData.append('userId',_id)
+    for (let value in values) {
+            formData.append(value, values[value]);
+        }
+    formData.append('profilePicturePath', values.profilePicture.name);
+    formData.append('picturePath', values.picture.name);
+
     const makeProject = await fetch(
       "http://localhost:3001/webpages/createpost",
       {
         method: "POST",
-        headers: {"Content-type": "application/json"},
-        body: JSON.stringify({userId:_id, ...values}),
+        body: formData
       }
         );
         onSubmitProps.resetForm();
@@ -114,7 +121,7 @@ const OneProject = () => {
                                         gridColumn: "span 2"
                                     }}
                                 />
-                                <TextField 
+                                <TextField
                                     label = "Name"
                                     onBlur={handleBlur}
                                     onChange={handleChange}

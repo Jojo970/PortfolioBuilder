@@ -81,14 +81,24 @@ const FourProject = () => {
     const { _id } = useSelector((state) => state.user);
 
     const handleFormSubmit = async (values, onSubmitProps) => {
-    const makeProject = await fetch(
-        "http://localhost:3001/webpages/createpost",
-        {
-        method: "POST",
-        headers: {"Content-type": "application/json"},
-        body: JSON.stringify({userId:_id, ...values}),
-        }
-    );
+        const formData = new FormData();
+        formData.append('userId',_id)
+        for (let value in values) {
+                formData.append(value, values[value]);
+            }
+        formData.append('profilePicturePath', values.profilePicture.name);
+        formData.append('picturePath', values.picture.name);
+        formData.append('picturePathTwo', values.pictureTwo.name);
+        formData.append('picturePathThree', values.pictureThree.name);
+        formData.append('picturePathFour', values.pictureFour.name);
+    
+        const makeProject = await fetch(
+          "http://localhost:3001/webpages/createpost",
+          {
+            method: "POST",
+            body: formData
+          }
+            );
     onSubmitProps.resetForm();
     navigate('/home')
     }
