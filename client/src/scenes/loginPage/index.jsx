@@ -9,16 +9,16 @@ const LoginPage = () => {
     <Box>
       <Box 
         width="100%" 
-        backgroundColor={theme.palette.background.alt} 
+        backgroundColor={theme.palette.background.default} 
         p = "1rem 6%" 
         textAlign="center"
       >
       <Typography 
         fontWeight = "bold"
         fontSize="32px"
-        color = "primary"
+        color = {theme.palette.secondary.main}
           >
-          Social Media
+          Portfolio Builder
         </Typography>
       </Box>
       <Box 
@@ -26,10 +26,10 @@ const LoginPage = () => {
       p = "2rem"
       m = "2rem auto"
       borderRadius= "1.5rem"
-      backgroundColor={theme.palette.background.alt} 
+      backgroundColor={theme.palette.background.default} 
       >
         <Typography fontWeight="500" variant="h5" sx = {{mb: "1.5rem"}}>
-          Welcome to my Social Media App
+          Welcome to the Portfolio Builder
         </Typography>
         <Form/>
       </Box>

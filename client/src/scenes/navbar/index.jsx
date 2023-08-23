@@ -9,15 +9,10 @@ import {
   FormControl,
   useTheme,
   useMediaQuery,
-  Icon
 } from "@mui/material";
 import {
-  Search,
-  Message,
   DarkMode,
   LightMode,
-  Notifications,
-  Help,
   Menu,
   Close,
 } from "@mui/icons-material";
@@ -35,11 +30,11 @@ const Navbar = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px");
 
   const theme = useTheme();
-  const neutralLight = theme.palette.neutral.light;
-  const dark = theme.palette.dark;
+  const dark = theme.palette.neutral.dark;
   const background = theme.palette.background.default;
-  const primaryLight = theme.palette.primary.light;
-  const alt = theme.palette.background.alt;
+  const green = theme.palette.secondary.main;
+  const blue = theme.palette.secondary.blue;
+  const alt = theme.palette.background.default;
 
   const fullName = `${user.firstName} ${user.lastName}`
 
@@ -49,25 +44,17 @@ const Navbar = () => {
         <Typography 
           fontWeight = "bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
-          color = "primary"
+          color = {green}
           onClick={() => navigate("/home")}
           sx = {{
             "&:hover": {
-              color:primaryLight,
+              color: blue,
               cursor: "pointer"
             }
           }}
             >
-            Social Media
+            Portfolio Builder
           </Typography>
-          {isNonMobileScreens && (
-            <FlexBetween backgroundColor={neutralLight} borderRadius="9px" gap="3rem" padding=" 0.1rem 1.5rem">
-              <InputBase placeholder = "Search..." />
-              <IconButton>
-                <Search />
-              </IconButton>
-            </FlexBetween>
-          )}
       </FlexBetween>
 
         {isNonMobileScreens ? (
@@ -79,14 +66,11 @@ const Navbar = () => {
               <LightMode sx ={{ color: dark, fontSize: '25px' }}/>
             )}
           </IconButton>
-          <Message sx ={{ fontSize: '25px' }}/>
-          <Notifications sx ={{ fontSize: '25px' }}/>
-          <Help sx ={{ fontSize: '25px' }}/>
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
               sx = {{
-                backgroundColor: neutralLight,
+                backgroundColor: alt,
                 width: "150px",
                 borderRadius: "0.25rem",
                 p: "0.25rem 1rem",
@@ -95,7 +79,7 @@ const Navbar = () => {
                   width: "3rem",
                 },
                 "& .MuiSelect-select:focus": {
-                  backgroundColor: neutralLight,
+                  backgroundColor: alt,
                 },
               }}
               input = {<InputBase />}
@@ -143,14 +127,11 @@ const Navbar = () => {
               <LightMode sx ={{ color: dark, fontSize: '25px' }}/>
             )}
           </IconButton>
-          <Message sx ={{ fontSize: '25px' }}/>
-          <Notifications sx ={{ fontSize: '25px' }}/>
-          <Help sx ={{ fontSize: '25px' }}/>
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
               sx = {{
-                backgroundColor: neutralLight,
+                backgroundColor: alt,
                 width: "150px",
                 borderRadius: "0.25rem",
                 p: "0.25rem 1rem",
@@ -159,7 +140,7 @@ const Navbar = () => {
                   width: "3rem",
                 },
                 "& .MuiSelect-select:focus": {
-                  backgroundColor: neutralLight,
+                  backgroundColor: alt,
                 },
               }}
               input = {<InputBase />}

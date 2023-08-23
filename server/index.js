@@ -64,8 +64,12 @@ app.use("/posts", postRoutes);
 
 // mongoose configs
 
+const mongoEndpoint = 'mongodb://localhost/';
+const db = 'portbuilder';
+
+
 const PORT = process.env.PORT || 6001
-mongoose.connect(process.env.MONGO_URL, {
+mongoose.connect(mongoEndpoint+db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }). then( () => {

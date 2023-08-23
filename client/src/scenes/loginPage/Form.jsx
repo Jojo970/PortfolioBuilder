@@ -183,7 +183,7 @@ const Form = () => {
                                 />
                                 <Box
                                     gridColumn="span 4"
-                                    border = {`1px solid ${palette.neutral.medium}`}
+                                    border = {`1px solid ${palette.neutral.light}`}
                                     borderRadius = "5px"
                                     p="1rem"
                                 >
@@ -253,9 +253,9 @@ const Form = () => {
                         sx = {{
                             m:"2rem 0",
                             p:"1rem",
-                            backgroundColor: palette.primary.main,
-                            color:palette.background.alt,
-                            "&:hover": {color: palette.primary.main}
+                            backgroundColor: palette.neutral.dark,
+                            color:palette.neutral.light,
+                            "&:hover": {color: palette.secondary.main}
                         }}
                         >
                             {isLogin ? "LOGIN" : "REGISTER"}
@@ -267,10 +267,10 @@ const Form = () => {
                             }}
                             sx={{
                                 textDecoration: "underline",
-                                color: palette.primary.main,
+                                color: palette.secondary.main,
                                 "&:hover": {
                                     cursor: "pointer",
-                                    color: palette.primary.light
+                                    color: palette.secondary.blue
                                 },
                             }}
                         >
