@@ -81,16 +81,50 @@ const FourProject = () => {
     const { _id } = useSelector((state) => state.user);
 
     const handleFormSubmit = async (values, onSubmitProps) => {
+        const project = [{
+            projectName: values.projectName, 
+            picture: values.picture,
+            picturePath: values.picture.name,
+            description: values.description,
+            liveLink: values.liveLink,
+            githubLink: values.githubLink
+        },{
+            projectName: values.projectNameTwo, 
+            picture: values.pictureTwo,
+            picturePath: values.pictureTwo.name,
+            description: values.descriptionTwo,
+            liveLink: values.liveLinkTwo,
+            githubLink: values.githubLinkTwo
+        },{
+            projectName: values.projectNameThree, 
+            picture: values.pictureThree,
+            picturePath: values.pictureThree.name,
+            description: values.descriptionThree,
+            liveLink: values.liveLinkThree,
+            githubLink: values.githubLinkThree
+        },{
+            projectName: values.projectNameFour, 
+            picture: values.pictureFour,
+            picturePath: values.pictureFour.name,
+            description: values.descriptionFour,
+            liveLink: values.liveLinkFour,
+            githubLink: values.githubLinkFour
+        },]
+
+
         const formData = new FormData();
         formData.append('userId',_id)
         for (let value in values) {
+                if (value === 'projectName') {
+                    break
+                }
+                
                 formData.append(value, values[value]);
             }
+            
+        formData.append('projects', project);
         formData.append('profilePicturePath', values.profilePicture.name);
-        formData.append('picturePath', values.picture.name);
-        formData.append('picturePathTwo', values.pictureTwo.name);
-        formData.append('picturePathThree', values.pictureThree.name);
-        formData.append('picturePathFour', values.pictureFour.name);
+
     
         const makeProject = await fetch(
           "http://localhost:3001/webpages/createpost",

@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState} from 'react'
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -6,73 +6,95 @@ import Dropzone from "react-dropzone";
 import {EditOutlined} from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 import { useSelector } from "react-redux";
-
 import { 
-  Box,
-  Button,
-  TextField,
-  useMediaQuery,
-  Typography,
-  useTheme,
+    Box,
+    Button,
+    TextField,
+    useMediaQuery,
+    Typography,
+    useTheme,
 } from "@mui/material";
 
 const schema = yup.object().shape({
-  websiteTitle:yup.string().required("required"),
-  name: yup.string().required("required"),
-  aboutMe: yup.string().required("required"),
-  profilePicture: yup.string().required("required"),
-  email:yup.string().email("invalid email").required("required"),
-  linkedIn:yup.string().required("required"),
-  github:yup.string().required("required"),
-  projectName: yup.string().required('required'),
-  picture: yup.string().required("required"),
-  description: yup.string().required("required"),
-  liveLink:yup.string().required("required"),
-  githubLink:yup.string().required("required"),
+    websiteTitle:yup.string().required("required"),
+    name: yup.string().required("required"),
+    aboutMe: yup.string().required("required"),
+    profilePicture: yup.string().required("required"),
+    email:yup.string().email("invalid email").required("required"),
+    linkedIn:yup.string().required("required"),
+    github:yup.string().required("required"),
+    projectName: yup.string().required('required'),
+    picture: yup.string().required("required"),
+    description: yup.string().required("required"),
+    liveLink:yup.string().required("required"),
+    githubLink:yup.string().required("required"),
 })
 
 const initialValues = {
-  websiteTitle:'',
-  name: '',
-  aboutMe: '',
-  profilePicture: '',
-  email: '',
-  linkedIn: '',
-  github: '',
-  projectName: '', 
-  picture: '',
-  description: '',
-  liveLink:'',
-  githubLink:'',
+    websiteTitle:'',
+    name: '',
+    aboutMe: '',
+    profilePicture: '',
+    email: '',
+    linkedIn: '',
+    github: '',
+    projectName: '', 
+    picture: '',
+    description: '',
+    liveLink:'',
+    githubLink:'',
 }
 
 
 
 const OneProject = () => {
-  const navigate = useNavigate();
-  const isNonMobile = useMediaQuery("(min-width: 1000px)");
-  const { palette } = useTheme();
-  const { _id } = useSelector((state) => state.user);
+    const navigate = useNavigate();
+    const isNonMobile = useMediaQuery("(min-width: 1000px)");
+    const { palette } = useTheme();
+    const { _id } = useSelector((state) => state.user);
+    const [sentParameter, setSentParameter] = useState(false)
+    const [receivedFiles, setReceivedFiles] = useState(false)
 
-  const handleFormSubmit = async (values, onSubmitProps) => {
+    const handleFormSubmit = async (values, onSubmitProps) => {
+
+    const projects = [{
+        projectName: values.projectName, 
+        picture: values.picture,
+        picturePath: values.picture.name,
+        description: values.description,
+        liveLink: values.liveLink,
+        githubLink: values.githubLink
+    },];
+
     const formData = new FormData();
-    formData.append('userId',_id)
-    for (let value in values) {
-            formData.append(value, values[value]);
-        }
-    formData.append('profilePicturePath', values.profilePicture.name);
-    formData.append('picturePath', values.picture.name);
+    formData.append('userId',_id);
 
-    const makeProject = await fetch(
-      "http://localhost:3001/webpages/createpost",
-      {
+    for (let value in values) {
+        if (value === "projectName") {
+            break;
+        }
+        formData.append(value, values[value])
+    };
+
+    formData.append('projects', JSON.stringify(projects));
+    formData.append('profilePicturePath', values.profilePicture.name);
+    projects.forEach((project) => {
+
+        formData.append(`projectImages`, project.picture);
+    })
+
+    const response = await fetch(
+        "http://localhost:3001/webpages/createpost",
+        {
         method: "POST",
         body: formData
-      }
+        }
         );
-        onSubmitProps.resetForm();
-    navigate('/home')
+        // onSubmitProps.resetForm();
+    // navigate('/home')
+
   }
+
 
   return (
     <Formik
@@ -277,7 +299,7 @@ const OneProject = () => {
                                         gridColumn: "span 2"
                                     }}
                                 />
-                              <Box
+                                <Box
                                     gridColumn="span 2"
                                     border = {`1px solid ${palette.neutral.light}`}
                                     borderRadius = "5px"
@@ -332,6 +354,19 @@ const OneProject = () => {
                         }}
                         >
                         Make My Website!
+                        </Button>
+                        <Button
+                        fullWidth
+                        type="submit"
+                        sx = {{
+                            m:"2rem 0",
+                            p:"1rem",
+                            backgroundColor: palette.neutral.dark,
+                            color:palette.neutral.light,
+                            "&:hover": {color: palette.secondary.main}
+                        }}
+                        >
+                        Download My Website!
                         </Button>
                         
                     </Box>
