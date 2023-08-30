@@ -12,7 +12,9 @@ const SentForm = () => {
 
   return (
     <Box
-      textAlign="center"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
     >
       <Typography
       fontWeight="500" 

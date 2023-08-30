@@ -1,10 +1,11 @@
-import {useState} from 'react'
+import {useState} from 'react';
 import { Formik } from "formik";
 import * as yup from "yup";
 import Dropzone from "react-dropzone";
 import {EditOutlined} from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 import { useSelector } from "react-redux";
+import SentForm from '../sentFormComponents/SentForm';
 import { 
     Box,
     Button,
@@ -13,7 +14,7 @@ import {
     Typography,
     useTheme,
 } from "@mui/material";
-import SentForm from '../sentFormComponents/SentForm';
+
 
 const schema = yup.object().shape({
     websiteTitle:yup.string().required("required"),
@@ -47,7 +48,7 @@ const initialValues = {
 
 
 
-const OneProject = ({ setDownloadLink, setReceivedFiles}) => {
+const OneProject = ({ setDownloadLink, setReceivedFiles }) => {
     const isNonMobile = useMediaQuery("(min-width: 1000px)");
     const { palette } = useTheme();
     const { _id } = useSelector((state) => state.user);
@@ -73,7 +74,7 @@ const OneProject = ({ setDownloadLink, setReceivedFiles}) => {
         if (value === "projectName") {
             break;
         }
-        formData.append(value, values[value])
+        formData.append(value, values[value]);
     };
 
     formData.append('projects', JSON.stringify(projects));
@@ -81,7 +82,7 @@ const OneProject = ({ setDownloadLink, setReceivedFiles}) => {
     projects.forEach((project) => {
 
         formData.append(`projectImages`, project.picture);
-    })
+    });
 
     const response = await fetch(
         "http://localhost:3001/webpages/createpost",
@@ -89,7 +90,7 @@ const OneProject = ({ setDownloadLink, setReceivedFiles}) => {
         method: "POST",
         body: formData
         }
-        );
+    );
     
     const responseData = await response.blob();
 
@@ -366,19 +367,7 @@ const OneProject = ({ setDownloadLink, setReceivedFiles}) => {
                             >
                             Make My Website!
                             </Button>
-                            {/* <Button
-                            fullWidth
-                            type="submit"
-                            sx = {{
-                                m:"2rem 0",
-                                p:"1rem",
-                                backgroundColor: palette.neutral.dark,
-                                color:palette.neutral.light,
-                                "&:hover": {color: palette.secondary.main}
-                            }}
-                            >
-                            Download My Website!
-                            </Button> */}
+                        
                             
                         </Box>
                     </form>

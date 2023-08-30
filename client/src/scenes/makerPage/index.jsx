@@ -5,12 +5,11 @@ import FourProject from "./forms/FourProject";
 import { Box, Button, Typography, useTheme, FormControl, InputLabel, Select, MenuItem, useMediaQuery } from "@mui/material";
 import { useState, useEffect } from "react";
 import Navbar from "scenes/navbar";
-import ReceivedFiles from "./sentFormComponents/ReceivedFiles";
 import { useNavigate } from "react-router-dom";
-
 
 const MakerPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const navigate = useNavigate();
   const { palette } = useTheme();
   const [numOfProjects, setNumOfProjects] = useState(1)
   const [showOne, setShowOne] = useState(true);
@@ -76,7 +75,24 @@ const MakerPage = () => {
         textAlign="center"
       >
         { receivedFiles ? (
-          <>
+          <Box
+          display="flex"
+          width="100%"
+          flexDirection="column"
+          alignItems="center"
+          >
+          {/* Once file is recieved from back end */}
+          <Typography
+            color={palette.primary.light}
+            variant = "h3"
+            sx= {{
+              mt: "2rem",
+              mb: "1.5rem",
+            }}
+            fontWeight={500}
+            >
+            Your website is ready for download!<br></br>Click to download below!
+            </Typography>
           <Button
                             fullWidth
                             type="button"
@@ -84,6 +100,7 @@ const MakerPage = () => {
                             sx = {{
                                 m:"2rem 0",
                                 p:"1rem",
+                                width: isNonMobileScreens ? '50%': '93%',
                                 backgroundColor: palette.neutral.dark,
                                 color:palette.neutral.light,
                                 "&:hover": {color: palette.secondary.main}
@@ -91,8 +108,26 @@ const MakerPage = () => {
                             >
                             Download My Website!
                             </Button>
-          </>
+          <Button
+                            fullWidth
+                            type="button"
+                            onClick = {() => {
+                              navigate("/home")
+                            }}
+                            sx = {{
+                                m:"2rem 0",
+                                p:"1rem",
+                                backgroundColor: palette.neutral.dark,
+                                width: isNonMobileScreens ? '50%': '93%',
+                                color:palette.neutral.light,
+                                "&:hover": {color: palette.secondary.main}
+                            }}
+                            >
+                            Go Home
+                            </Button>
+          </Box>
         ) : (
+          // Before the form is sent
         <Box>
           <Box
             m = "2rem auto"

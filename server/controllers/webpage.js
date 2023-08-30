@@ -2,6 +2,7 @@ import Webpage from "../models/Webpage.js";
 import User from "../models/User.js";
 import { makeTheHTMLFile } from "../pages/htmlPageMaker.js";
 import { cssString } from "../pages/cssPageMaker.js";
+import { svgs } from "../pages/svgFiles.js";
 import fs from "fs";
 import path from "path";
 import AdmZip from "adm-zip";
@@ -39,6 +40,9 @@ export const createWebpage = async ( req, res ) => {
             const picturePath = path.join(imagesFolder, projectImage.originalname);
             fs.writeFileSync(picturePath, projectImage.buffer);
         });
+        for (var fileName in svgs) {
+            fs.writeFileSync(path.join(imagesFolder, fileName), svgs[fileName]);
+        }
 
         const zip = new AdmZip();
         zip.addLocalFolder(webpageFolder, "userWebpage"); 
@@ -50,6 +54,7 @@ export const createWebpage = async ( req, res ) => {
         res.setHeader("Content-Disposition", "attachment; filename=userWebpage.zip");
         res.send(zipBuffer);
         
+        fs.rmSync(webpageFolder, { recursive: true });
 
     } catch (err) {
         res.status(409).json( {message: err.message} )

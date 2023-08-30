@@ -1,10 +1,10 @@
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import {EditOutlined} from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 import { 
   Box,
   Button,
@@ -13,6 +13,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import SentForm from '../sentFormComponents/SentForm';
+
 
 const schema = yup.object().shape({
   websiteTitle:yup.string().required("required"),
@@ -54,14 +56,17 @@ const initialValues = {
   githubLinkTwo:'',
 };
 
-const TwoProject = () => {
-  const navigate = useNavigate();
+const TwoProject = ({ setDownloadLink, setReceivedFiles}) => {
   const isNonMobile = useMediaQuery("(min-width: 1000px)");
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
+  const [sentParameter, setSentParameter] = useState(false);
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    const project = [{
+
+    setSentParameter(true);
+
+    const projects = [{
         projectName: values.projectName, 
         picture: values.picture,
         picturePath: values.picture.name,
@@ -78,32 +83,45 @@ const TwoProject = () => {
     },]
 
     const formData = new FormData();
-
     formData.append('userId',_id)
     
     for (let value in values) {
-            if (value === 'projectName') {
-                break
-            }
-            
-            formData.append(value, values[value]);
+        if (value === 'projectName') {
+            break;
         }
+        formData.append(value, values[value]);
+    }
         
-    formData.append('projects', project);
+    formData.append('projects', JSON.stringify(projects));
     formData.append('profilePicturePath', values.profilePicture.name);
+    projects.forEach((project) => {
+
+        formData.append(`projectImages`, project.picture);
+    })
     
-        const makeProject = await fetch(
-          "http://localhost:3001/webpages/createpost",
-          {
-            method: "POST",
-            body: formData
-          }
-            );
+    const response = await fetch(
+        "http://localhost:3001/webpages/createpost",
+        {
+        method: "POST",
+        body: formData
+        }
+    );
+
+    const responseData = await response.blob();
+
+    const url = await URL.createObjectURL(responseData);
+
+    setDownloadLink(url);
+    setReceivedFiles(true);
+
     onSubmitProps.resetForm();
-    navigate('/home')
-  }
+    }
 
   return (
+    <>
+    {sentParameter ? (
+        <SentForm />
+    ): (
     <Formik
             onSubmit = {handleFormSubmit}
             initialValues = {initialValues}
@@ -371,9 +389,9 @@ const TwoProject = () => {
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value = {values.githubLinkTwo}
-                                    name = "projectNameTwo"
-                                    error = {Boolean(touched.projectNameTwo) && Boolean(errors.projectNameTwo)}
-                                    helperText = {touched.projectNameTwo && errors.projectNameTwo}
+                                    name = "githubLinkTwo"
+                                    error = {Boolean(touched.githubLinkTwo) && Boolean(errors.githubLinkTwo)}
+                                    helperText = {touched.githubLinkTwo && errors.githubLinkTwo}
                                     sx={{
                                         gridColumn: "span 2"
                                     }}
@@ -464,6 +482,9 @@ const TwoProject = () => {
             )}
 
         </Formik>
+    )}
+    </>
+
   )
 }
 
