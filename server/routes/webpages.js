@@ -6,15 +6,6 @@ const upload = multer();
 
 const router = express.Router();
 
-const maxFileCounts = {
-  profilePicture:1,
-  picture:1,
-  pictureTwo: 1,
-  pictureThree: 1,
-  pictureFour: 1
-}
-
-
 // create
 
 router.post("/createpost", upload.fields([
