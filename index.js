@@ -3,7 +3,6 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
@@ -12,7 +11,6 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import webpageRoutes from "./routes/webpages.js"
 import { register } from "./controllers/auth.js";
-import { verifyToken } from "./middleware/auth.js";
 
 
 
@@ -20,7 +18,6 @@ import { verifyToken } from "./middleware/auth.js";
 // Configs
 
 const __fileName = fileURLToPath(import.meta.url);
-const __dirName = path.dirname(__fileName);
 dotenv.config();
 
 const app = express();
@@ -31,6 +28,7 @@ app.use(morgan("common"));
 app.use(bodyParser.json({limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true }));
 app.use(cors());
+app.use(express.static(path.join(__dirname, "client", "build")))
 
 
 // routes with files
@@ -44,11 +42,16 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/webpages", webpageRoutes);
 
-// mongoose configs
+// heroku configs
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 
 
-const PORT = process.env.PORT || 6001
+
+const PORT = process.env.PORT || 3001
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
