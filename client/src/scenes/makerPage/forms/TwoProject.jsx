@@ -100,7 +100,7 @@ const TwoProject = ({ setDownloadLink, setReceivedFiles}) => {
     })
     
     const response = await fetch(
-        "http://localhost:3001/webpages/createpost",
+        "/webpages/createpost",
         {
         method: "POST",
         body: formData
