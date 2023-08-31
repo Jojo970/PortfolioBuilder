@@ -7,14 +7,11 @@ import {
     Typography,
     useTheme,
 } from "@mui/material";
-import {EditOutlined} from "@mui/icons-material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "state";
-import Dropzone from "react-dropzone";
-import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
     firstName: yup.string().required("required"),
@@ -23,7 +20,6 @@ const registerSchema = yup.object().shape({
     password:yup.string().required("required"),
     location:yup.string().required("required"),
     occupation:yup.string().required("required"),
-    picture:yup.string(),
 });
 
 const loginSchema = yup.object().shape({
@@ -38,7 +34,6 @@ const initialValuesRegister = {
     password: '',
     location: '',
     occupation: '',
-    picture: '',
 };
 
 const initialValuesLogin = {
@@ -56,17 +51,13 @@ const Form = () => {
     const isRegister = pageType === "register";
 
     const register = async (values, onSubmitProps) => {
-        const formData = new FormData();
-        for (let value in values) {
-            formData.append(value, values[value]);
-        }
-        formData.append('picturePath', values.picture.name);
 
         const savedUserResponse = await fetch(
             "http://localhost:3001/auth/register",
             {
                 method: "POST",
-                body: formData,
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify(values),
             }
         );
         const savedUser = await savedUserResponse.json();
@@ -181,42 +172,6 @@ const Form = () => {
                                         gridColumn: "span 4"
                                     }}
                                 />
-                                <Box
-                                    gridColumn="span 4"
-                                    border = {`1px solid ${palette.neutral.light}`}
-                                    borderRadius = "5px"
-                                    p="1rem"
-                                >
-                                    <Dropzone
-                                        acceptedFiles = ".jpg, .jpeg, .png"
-                                        multiple={false}
-                                        onDrop={(acceptedFiles) => {
-                                            setFieldValue("picture", acceptedFiles[0])
-                                        }}
-                                    >
-                                        {({getRootProps, getInputProps}) =>(
-                                            <Box
-                                                {...getRootProps()}
-                                                border= {`2px dashed ${palette.primary.main}`}
-                                                p = "1rem"
-                                                sx={{
-                                                    "&:hover": {cursor: "pointer"}
-                                                }}
-                                            >
-                                                <input {...getInputProps()} />
-                                                { !values.picture ? (
-                                                    <p>Add Picture Here</p>
-                                                ) : (
-                                                    <FlexBetween>
-                                                        <Typography>{values.picture.name}</Typography>
-                                                        <EditOutlined />
-                                                    </FlexBetween>
-                                                )}
-                                            </Box>
-                                        )}
-
-                                    </Dropzone>
-                                </Box>
                             </>
                         )}
                         <TextField 
