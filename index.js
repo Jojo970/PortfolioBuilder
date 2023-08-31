@@ -33,11 +33,6 @@ app.use(bodyParser.json({limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "client", "build")));
-app.use((req, res, next) => {
-    // Remove the CSP header
-    res.removeHeader('Content-Security-Policy');
-    next();
-  });
 
 
 // routes with files
@@ -61,6 +56,7 @@ app.get("*", (req, res) => {
 
 
 const PORT = process.env.PORT || 3001;
+
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
