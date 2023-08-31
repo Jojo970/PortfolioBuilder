@@ -4,7 +4,6 @@ const initialState = {
     mode: "light",
     user: null,
     token: null,
-    posts: [],
 };
 
 export const authSlice = createSlice({
@@ -27,18 +26,8 @@ export const authSlice = createSlice({
                 state.user.friends = action.payload.friends
             } else { console.log("User has no friends") }
         },
-        setPosts: (state, action) => {
-            state.posts = action.payload.posts;
-        },
-        setPost: (state, action) => {
-            const updatedPosts = state.posts.map((post) => {
-                if (post._id === action.payload.post._id) return action.payload.post;
-                return post
-            });
-            state.posts = updatedPosts;
-        }
     }
 })
 
-export const { setMode, setLogin, setLogout, setFriends, setPost, setPosts } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, } = authSlice.actions;
 export default authSlice.reducer
