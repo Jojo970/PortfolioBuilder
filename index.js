@@ -30,7 +30,12 @@ app.use(morgan("common"));
 app.use(bodyParser.json({limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true }));
 app.use(cors());
-app.use(express.static(path.join(__dirname, "client", "build")))
+app.use(express.static(path.join(__dirname, "client", "build")));
+app.use((req, res, next) => {
+    // Remove the CSP header
+    res.removeHeader('Content-Security-Policy');
+    next();
+  });
 
 
 // routes with files
