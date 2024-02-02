@@ -22,20 +22,6 @@ MongoDB (Database)
 
 ## How to Use
 
-### Go to this [Link](https://portfolio-maker-0ba91bf7208f.herokuapp.com/).
-
-1. Sign up for an account.
-
-2. Once you sign up and log in, you will see 2 buttons. Click the "Make a Website" button.
-
-3. Select the number of projects you would like to display.
-
-4. Fill out the form and upload necessary images.
-
-5. Click submit and wait for the portfolio to be made.
-
-6. Download the portfolio and see the magic!
-
 
 ### To run to locally
 
