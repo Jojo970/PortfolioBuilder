@@ -1,8 +1,6 @@
 # Portfolio Builder
 Easy to use, portfolio builder for Software Developers or professionals looking to showcase their projects.
 
-### [Live Website](https://portfolio-maker-0ba91bf7208f.herokuapp.com/)
-
 
 ## About
 This application serves to address two main issues facing software developers and their portfolio websites.
@@ -27,14 +25,16 @@ MongoDB (Database)
 
 Clone this repository.
 
-Head into the client file and run
-
-```npm install```
-
-```npm start```
-
 Open a new terminal and run 
 
 ```npm install```
 
 ```node server.js```
+
+Head into the client file in a new terminal and run
+
+```npm install```
+
+```npm start```
+
+
