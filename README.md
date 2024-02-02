@@ -9,9 +9,6 @@ This application serves to address two main issues facing software developers an
 
 2. Many developers make a portfolio website but have very little feedback provided to them. I hope to make this web applicaiton a platform where developers are able to rate and critique eachother's portfolios.
 
-### Pictures
-
-
 ## Built With
 
 React.js (front end)
