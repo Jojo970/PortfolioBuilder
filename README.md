@@ -32,10 +32,13 @@ Head into the client file in a new terminal and run
 
 ```npm install```
 
+```npm start```
+
+
+
 From here you will have the app working locally!
 
 Sign up for an account and start building!
 
-```npm start```
 
 
