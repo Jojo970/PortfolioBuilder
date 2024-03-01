@@ -1,6 +1,8 @@
 # Portfolio Builder
 Easy to use, portfolio builder for Software Developers or professionals looking to showcase their projects.
 
+![image](dark.png)
+
 
 ## About
 This application serves to address two main issues facing software developers and their portfolio websites.
