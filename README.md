@@ -43,4 +43,11 @@ From here you will have the app working locally!
 Sign up for an account and start building!
 
 
+## To Do
+
+Update Example Template to show more of what can be done.
+
+Update Example Template to have functionality (add Javascript to it)
+
+
 
